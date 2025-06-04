@@ -1,0 +1,12 @@
+# Ignore Visual Studio user and build files
+.vs/
+*.user
+*.suo
+*.cache
+*.dbmdl
+*.log
+bin/
+obj/
+*.tmp
+*.bak
+*.swp
