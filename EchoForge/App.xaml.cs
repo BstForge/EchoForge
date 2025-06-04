@@ -31,9 +31,7 @@ namespace EchoForge
             await AppHost.StartAsync();
 
             base.OnStartup(e);
-
-            var mainWindow = new MainWindow();
-            mainWindow.Show();
+            // MainWindow will be created automatically via StartupUri in App.xaml
         }
 
         protected override async void OnExit(ExitEventArgs e)
