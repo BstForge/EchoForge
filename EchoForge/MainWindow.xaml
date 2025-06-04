@@ -3,32 +3,53 @@
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                     xmlns:local="clr-namespace:EchoForge"
                      xmlns:Fluent="urn:fluent-ribbon"
+                     xmlns:local="clr-namespace:EchoForge"
                      mc:Ignorable="d"
                      Title="EchoForge"
-                     Height="450"
-                     Width="800">
+                     Height="600"
+                     Width="900">
     <DockPanel>
         <Fluent:Ribbon x:Name="MainRibbon" DockPanel.Dock="Top">
-            <Fluent:RibbonTabItem Header="File">
-                <Fluent:RibbonGroupBox Header="Project">
-                    <Fluent:Button Header="New Project" />
-                    <Fluent:Button Header="Open Project" />
-                </Fluent:RibbonGroupBox>
-                <Fluent:RibbonGroupBox Header="Settings">
-                    <Fluent:Button Header="API Keys" />
+            <Fluent:Ribbon.Menu>
+                <Fluent:ApplicationMenu>
+                    <Fluent:MenuItem Header="New Project" />
+                    <Fluent:MenuItem Header="Load Project" />
+                    <Fluent:MenuItem Header="Save" />
+                    <Fluent:MenuItem Header="API Keys" />
+                    <Fluent:MenuItem Header="Exit" />
+                </Fluent:ApplicationMenu>
+            </Fluent:Ribbon.Menu>
+            <Fluent:RibbonTabItem Header="Prepare">
+                <Fluent:RibbonGroupBox Header="Setup">
+                    <Fluent:Button Header="Add Voices" />
+                    <Fluent:Button Header="Assign Voices" />
+                    <Fluent:Button Header="Parse Scene" />
                 </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
-            <Fluent:RibbonTabItem Header="Tools">
+            <Fluent:RibbonTabItem Header="Generate">
                 <Fluent:RibbonGroupBox Header="Actions">
-                    <Fluent:Button Header="Parse Scene" />
-                    <Fluent:Button Header="Generate Audio" />
+                    <Fluent:Button Header="Send Example (~250 characters)" />
+                    <Fluent:Button Header="Send Single Segment" />
+                    <Fluent:Button Header="Send All" />
                 </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
         </Fluent:Ribbon>
         <Grid>
-            <!-- Future content like scene previews and output logs -->
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="90" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <!-- Left Pane -->
+            <Border Grid.Row="0" Grid.Column="0" Background="#EEEEEE" />
+            <!-- Right Pane -->
+            <Border Grid.Row="0" Grid.Column="1" Background="#FFFFFF" />
+            <!-- Bottom Banner Pane -->
+            <Border Grid.Row="1" Grid.ColumnSpan="2" Background="#DDDDDD" />
         </Grid>
     </DockPanel>
 </Fluent:RibbonWindow>
