@@ -23,9 +23,19 @@
   </ItemGroup>
 
   <ItemGroup>
+	  <Resource Include="panes/icons/*.png" />
+  </ItemGroup>
+
+
+	<ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
+
+	<ItemGroup>
+	  <Folder Include="panes\icons\" />
+	</ItemGroup>
 
 </Project>

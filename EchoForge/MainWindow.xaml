@@ -26,17 +26,47 @@
                 </Fluent:ApplicationMenu>
             </Fluent:Ribbon.Menu>
             <Fluent:RibbonTabItem Header="Prepare">
-                <Fluent:RibbonGroupBox Header="Setup">
-                    <Fluent:Button Header="Add Voices" />
-                    <Fluent:Button Header="Assign Voices" />
-                    <Fluent:Button Header="Parse Scene" />
+                <Fluent:RibbonGroupBox Header="Scene">
+                    <Fluent:Button Header="New Scene" Icon="/panes/icons/new_scene.png" />
+                    <Fluent:Button Header="Load Scene" Icon="/panes/icons/load_scene.png" />
+                    <Fluent:Button Header="Save Scene" Icon="/panes/icons/save_scene.png" />
+                    <Fluent:Button Header="Scene Metadata" Icon="/panes/icons/scene_metadata.png" />
+                </Fluent:RibbonGroupBox>
+                <Fluent:RibbonGroupBox Header="Input">
+                    <Fluent:Button Header="Import from File" Icon="/panes/icons/import_from_file.png" />
+                    <Fluent:Button Header="Format Cleaner" Icon="/panes/icons/format_cleaner.png" />
+                    <Fluent:Button Header="Word Count/Tone Check" Icon="/panes/icons/word_count_tone_check.png" />
+                </Fluent:RibbonGroupBox>
+                <Fluent:RibbonGroupBox Header="Parse">
+                    <Fluent:Button Header="Auto-Chunk" Icon="/panes/icons/auto_chunk.png" />
+                    <Fluent:Button Header="Manual Split" Icon="/panes/icons/manual_split.png" />
+                    <Fluent:Button Header="Split at Cursor" Icon="/panes/icons/split_at_cursor.png" />
+                </Fluent:RibbonGroupBox>
+                <Fluent:RibbonGroupBox Header="Tools">
+                    <Fluent:Button Header="Clean All" Icon="/panes/icons/clean_all.png" />
+                    <Fluent:Button Header="Undo Parse" Icon="/panes/icons/undo_parse.png" />
+                    <Fluent:Button Header="Batch Mode Toggle" Icon="/panes/icons/batch_mode_toggle.png" />
                 </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
             <Fluent:RibbonTabItem Header="Generate">
-                <Fluent:RibbonGroupBox Header="Actions">
-                    <Fluent:Button Header="Send Example (~250 characters)" />
-                    <Fluent:Button Header="Send Single Segment" />
-                    <Fluent:Button Header="Send All" />
+                <Fluent:RibbonGroupBox Header="Generations">
+                    <Fluent:Button Header="Send Example (~250 characters)" Icon="/panes/icons/send_example.png" />
+                    <Fluent:Button Header="Send Single Segment" Icon="/panes/icons/send_single_segment.png" />
+                    <Fluent:Button Header="Send All Segments" Icon="/panes/icons/send_all_segments.png" />
+                </Fluent:RibbonGroupBox>
+                <Fluent:RibbonGroupBox Header="Queue Control">
+                    <Fluent:Button Header="Pause/Resume Queue" Icon="/panes/icons/pause_resume_queue.png" />
+                    <Fluent:Button Header="Cancel Generation" Icon="/panes/icons/cancel_generation.png" />
+                    <Fluent:Button Header="Retry Failed" Icon="/panes/icons/retry_failed.png" />
+                </Fluent:RibbonGroupBox>
+                <Fluent:RibbonGroupBox Header="Output">
+                    <Fluent:Button Header="Open Output Folder" Icon="/panes/icons/open_output_folder.png" />
+                    <Fluent:Button Header="Play Last Generated" Icon="/panes/icons/play_last_generated.png" />
+                    <Fluent:Button Header="Export as ZIP" Icon="/panes/icons/export_as_zip.png" />
+                </Fluent:RibbonGroupBox>
+                <Fluent:RibbonGroupBox Header="Preview">
+                    <Fluent:Button Header="Voice Preview" Icon="/panes/icons/voice_preview.png" />
+                    <Fluent:Button Header="Tone Adjust Test" Icon="/panes/icons/tone_adjust_test.png" />
                 </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
             <Fluent:RibbonTabItem Header="Settings">
