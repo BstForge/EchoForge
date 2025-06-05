@@ -38,6 +38,24 @@
                     <Fluent:Button Header="Send All" />
                 </Fluent:RibbonGroupBox>
             </Fluent:RibbonTabItem>
+            <Fluent:RibbonTabItem Header="Settings">
+                <Fluent:RibbonGroupBox Header="Appearance" Margin="0,0,10,0">
+                    <Fluent:Button Header="Toggle Theme" Click="ToggleTheme_Click" />
+                </Fluent:RibbonGroupBox>
+                <Fluent:RibbonGroupBox Header="API Management" Margin="0,0,10,0">
+                    <Fluent:Button Header="Edit API Keys" Click="EditApiKeys_Click" />
+                    <Fluent:Button Header="Configured Voices" Click="ConfiguredVoices_Click" />
+                </Fluent:RibbonGroupBox>
+                <Fluent:RibbonGroupBox Header="License &amp; Support" Margin="0,0,10,0">
+                    <Fluent:Button Header="Enter Product Key" Click="EnterProductKey_Click" />
+                    <Fluent:Button Header="Join Discord" Click="JoinDiscord_Click" />
+                    <Fluent:Button Header="Support" Click="Support_Click" />
+                </Fluent:RibbonGroupBox>
+                <Fluent:RibbonGroupBox Header="About">
+                    <Fluent:Button Header="About EchoForge" Click="AboutApp_Click" />
+                    <Fluent:Button Header="About Developer" Click="AboutDev_Click" />
+                </Fluent:RibbonGroupBox>
+            </Fluent:RibbonTabItem>
         </Fluent:Ribbon>
         <Grid>
             <Grid.RowDefinitions>
