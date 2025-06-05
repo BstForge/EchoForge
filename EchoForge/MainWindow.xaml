@@ -19,6 +19,7 @@
                     <Fluent:MenuItem Header="New Project" />
                     <Fluent:MenuItem Header="Load Project" />
                     <Fluent:MenuItem Header="Save" />
+
                     <Fluent:MenuItem Header="API Keys" />
                     <Fluent:MenuItem Header="Exit" />
                 </Fluent:ApplicationMenu>
@@ -44,11 +45,32 @@
                 <RowDefinition Height="90" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="4*" />
+                <ColumnDefinition Width="6*" />
             </Grid.ColumnDefinitions>
             <!-- Left Pane -->
-            <Border Grid.Row="0" Grid.Column="0" Background="#EEEEEE" />
+            <Border Grid.Row="0" Grid.Column="0" Background="#EEEEEE">
+                <Grid Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0" Margin="0,0,0,5">
+                        <Button Content="Copy" Width="60" Margin="0,0,5,0" />
+                        <Button Content="Paste" Width="60" />
+                    </StackPanel>
+                    <TextBox x:Name="InputTextBox" Grid.Row="1" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" />
+                    <Grid Grid.Row="2" Margin="0,5,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="CharCountText" Text="0 characters" VerticalAlignment="Center" />
+                        <Button Content="Parse" Grid.Column="1" Width="80" HorizontalAlignment="Right" />
+                    </Grid>
+                </Grid>
+            </Border>
             <!-- Right Pane -->
             <Border Grid.Row="0" Grid.Column="1" Background="#FFFFFF" />
             <!-- Bottom Banner Pane -->
