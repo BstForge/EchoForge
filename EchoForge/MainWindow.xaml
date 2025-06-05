@@ -13,7 +13,8 @@
         <Fluent:WindowCommands />
     </Fluent:RibbonWindow.WindowCommands>
     <DockPanel>
-        <Fluent:Ribbon x:Name="MainRibbon" DockPanel.Dock="Top" SelectionChanged="MainRibbon_SelectionChanged">
+        <Fluent:Ribbon x:Name="MainRibbon" DockPanel.Dock="Top"
+               SelectedTabChanged="MainRibbon_SelectedTabChanged">
             <Fluent:Ribbon.Menu>
                 <Fluent:ApplicationMenu Header="File">
                     <Fluent:MenuItem Header="New Project" />

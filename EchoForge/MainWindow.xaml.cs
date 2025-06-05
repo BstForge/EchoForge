@@ -67,9 +67,9 @@ namespace EchoForge
             MessageBox.Show("Developed by Your Name\nContact: example@example.com", "About Developer", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
-        private void MainRibbon_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void MainRibbon_SelectedTabChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (MainRibbon.SelectedItem is RibbonTabItem selectedTab)
+            if (MainRibbon.SelectedTabItem is RibbonTabItem selectedTab)
             {
                 var header = selectedTab.Header as string;
                 switch (header)
