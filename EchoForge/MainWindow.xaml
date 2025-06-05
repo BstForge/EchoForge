@@ -13,7 +13,7 @@
         <Fluent:WindowCommands />
     </Fluent:RibbonWindow.WindowCommands>
     <DockPanel>
-        <Fluent:Ribbon x:Name="MainRibbon" DockPanel.Dock="Top">
+        <Fluent:Ribbon x:Name="MainRibbon" DockPanel.Dock="Top" SelectionChanged="MainRibbon_SelectionChanged">
             <Fluent:Ribbon.Menu>
                 <Fluent:ApplicationMenu Header="File">
                     <Fluent:MenuItem Header="New Project" />
@@ -67,80 +67,9 @@
                 <ColumnDefinition Width="6*" />
             </Grid.ColumnDefinitions>
             <!-- Left Pane -->
-            <Border Grid.Row="0" Grid.Column="0" Background="#EEEEEE">
-                <Grid Margin="5">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0" Margin="0,0,0,5">
-                        <Button Content="Copy" Width="60" Margin="0,0,5,0" />
-                        <Button Content="Paste" Width="60" />
-                    </StackPanel>
-                    <TextBox x:Name="InputTextBox" Grid.Row="1" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" />
-                    <Grid Grid.Row="2" Margin="0,5,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock x:Name="CharCountText" Text="0 characters" VerticalAlignment="Center" />
-                        <Button Content="Parse" Grid.Column="1" Width="80" HorizontalAlignment="Right" />
-                    </Grid>
-                </Grid>
-            </Border>
+            <ContentControl x:Name="LeftPaneHost" Grid.Row="0" Grid.Column="0" />
             <!-- Right Pane -->
-            <Border Grid.Row="0" Grid.Column="1" Background="#FFFFFF">
-                <Grid Margin="5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="3*" />
-                        <ColumnDefinition Width="2*" />
-                    </Grid.ColumnDefinitions>
-
-                    <!-- Chunk Viewer and controls -->
-                    <Grid Grid.Column="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-
-                        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,5">
-                            <Button Content="&lt;" Width="30" Margin="0,0,5,0" />
-                            <Button Content=">" Width="30" Margin="0,0,5,0" />
-                            <TextBlock Text="Voice:" VerticalAlignment="Center" Margin="5,0" />
-                            <ComboBox Width="120" Margin="0,0,5,0" />
-                            <TextBlock Text="Tone:" VerticalAlignment="Center" Margin="5,0" />
-                            <TextBox Width="100" IsReadOnly="True" />
-                        </StackPanel>
-
-                        <RichTextBox Grid.Row="1" IsReadOnly="True" VerticalScrollBarVisibility="Auto" />
-                    </Grid>
-
-                    <!-- Adjustment controls -->
-                    <StackPanel Grid.Column="1" Margin="10,0,0,0">
-                        <StackPanel Margin="0,0,0,10">
-                            <TextBlock Text="Speed" />
-                            <Slider Minimum="0" Maximum="9" TickFrequency="1" IsSnapToTickEnabled="True" />
-                        </StackPanel>
-                        <StackPanel Margin="0,0,0,10">
-                            <TextBlock Text="Tone" />
-                            <Slider Minimum="0" Maximum="9" TickFrequency="1" IsSnapToTickEnabled="True" />
-                        </StackPanel>
-                        <StackPanel Margin="0,0,0,10">
-                            <TextBlock Text="Pacing" />
-                            <Slider Minimum="0" Maximum="9" TickFrequency="1" IsSnapToTickEnabled="True" />
-                        </StackPanel>
-
-                        <Button Content="Re-build" Margin="0,0,0,5" />
-                        <Button Content="Send to Generation Menu" Margin="0,0,0,10" />
-
-                        <StackPanel Orientation="Horizontal">
-                            <ComboBox Width="120" />
-                            <Button Content="Save Preset" Margin="5,0,0,0" />
-                        </StackPanel>
-                    </StackPanel>
-                </Grid>
-            </Border>
+            <ContentControl x:Name="RightPaneHost" Grid.Row="0" Grid.Column="1" />
             <!-- Bottom Banner Pane -->
             <Border Grid.Row="1" Grid.ColumnSpan="2" Background="#DDDDDD" />
         </Grid>

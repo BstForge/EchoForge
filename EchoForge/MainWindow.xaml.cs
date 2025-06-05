@@ -1,5 +1,6 @@
 ﻿using Fluent;
 using System.Diagnostics;
+using EchoForge.panes;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,6 +23,8 @@ namespace EchoForge
         public MainWindow()
         {
             InitializeComponent();
+            LeftPaneHost.Content = new panes.PrepareLeftPane();
+            RightPaneHost.Content = new panes.PrepareRightPane();
         }
 
         private void ToggleTheme_Click(object sender, RoutedEventArgs e)
@@ -62,6 +65,29 @@ namespace EchoForge
         private void AboutDev_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Developed by Your Name\nContact: example@example.com", "About Developer", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void MainRibbon_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (MainRibbon.SelectedItem is RibbonTabItem selectedTab)
+            {
+                var header = selectedTab.Header as string;
+                switch (header)
+                {
+                    case "Prepare":
+                        LeftPaneHost.Content = new PrepareLeftPane();
+                        RightPaneHost.Content = new PrepareRightPane();
+                        break;
+                    case "Generate":
+                        LeftPaneHost.Content = new GenerateLeftPane();
+                        RightPaneHost.Content = new GenerateRightPane();
+                        break;
+                    case "Settings":
+                        LeftPaneHost.Content = new SettingsLeftPane();
+                        RightPaneHost.Content = new SettingsRightPane();
+                        break;
+                }
+            }
         }
     }
 }
