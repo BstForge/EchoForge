@@ -9,10 +9,13 @@
                      Title="EchoForge"
                      Height="600"
                      Width="900">
+    <Fluent:RibbonWindow.WindowCommands>
+        <Fluent:WindowCommands />
+    </Fluent:RibbonWindow.WindowCommands>
     <DockPanel>
         <Fluent:Ribbon x:Name="MainRibbon" DockPanel.Dock="Top">
             <Fluent:Ribbon.Menu>
-                <Fluent:ApplicationMenu>
+                <Fluent:ApplicationMenu Header="File">
                     <Fluent:MenuItem Header="New Project" />
                     <Fluent:MenuItem Header="Load Project" />
                     <Fluent:MenuItem Header="Save" />
