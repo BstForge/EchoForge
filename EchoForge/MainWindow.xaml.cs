@@ -25,6 +25,13 @@ namespace EchoForge
             InitializeComponent();
             LeftPaneHost.Content = new panes.PrepareLeftPane();
             RightPaneHost.Content = new panes.PrepareRightPane();
+
+            Loaded += (s, e) =>
+            {
+                var popup = new StartPopup();
+                popup.Owner = this;
+                popup.ShowDialog();
+            };
         }
 
         private void ToggleTheme_Click(object sender, RoutedEventArgs e)
