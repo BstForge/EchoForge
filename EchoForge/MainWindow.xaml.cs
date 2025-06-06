@@ -41,7 +41,9 @@ namespace EchoForge
 
         private void EditApiKeys_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("API key editor placeholder.", "Edit API Keys");
+            var win = new ApiKeyWindow();
+            win.Owner = this;
+            win.ShowDialog();
         }
 
         private void ConfiguredVoices_Click(object sender, RoutedEventArgs e)

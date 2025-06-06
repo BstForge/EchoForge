@@ -25,8 +25,20 @@
 	<ItemGroup>
 		<Resource Include="panes/icons/*.png" />
 		<Resource Include="resources\wflogo.png">
-		  <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		</Resource>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="Properties\Settings.settings">
+			<Generator>SettingsSingleFileGenerator</Generator>
+			<LastGenOutput>Settings.Designer.cs</LastGenOutput>
+		</None>
+		<Compile Update="Properties\Settings.Designer.cs">
+			<DesignTimeSharedInput>True</DesignTimeSharedInput>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Settings.settings</DependentUpon>
+		</Compile>
 	</ItemGroup>
 
 
@@ -39,6 +51,13 @@
 
 	<ItemGroup>
 		<Folder Include="panes\icons\" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+	  <Compile Update="Properties\Settings.Designer.cs">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Compile>
 	</ItemGroup>
 
 </Project>

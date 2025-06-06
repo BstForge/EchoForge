@@ -1,0 +1,34 @@
+﻿<Window x:Class="EchoForge.ApiKeyWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Enter Your API Keys" Height="250" Width="500" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Enter Your API Keys" FontSize="16" FontWeight="Bold" />
+        <TextBlock Grid.Row="1" TextWrapping="Wrap" Margin="0,5,0,15">
+            Please enter your API keys below. The system will not function correctly unless both ChatGPT and ElevenLabs have valid API keys saved. These will be securely stored on your local system using the System.Configuration.ConfigurationManager user settings mechanism and will only be transmitted to their respective APIs.
+        </TextBlock>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center">
+            <TextBlock Text="ChatGPT API Key:" VerticalAlignment="Center" Width="120" />
+            <TextBox x:Name="ChatGPTKeyTextBox" Width="250" Tag="Paste ChatGPT key here" />
+            <Button Content="Save" Margin="5,0,0,0" Click="SaveChatGPT_Click" Width="60" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,10,0,0">
+            <TextBlock Text="ElevenLabs API Key:" VerticalAlignment="Center" Width="120" />
+            <TextBox x:Name="ElevenLabsKeyTextBox" Width="250" Tag="Paste ElevenLabs key here" />
+            <Button Content="Save" Margin="5,0,0,0" Click="SaveElevenLabs_Click" Width="60" />
+        </StackPanel>
+
+        <Button Grid.Row="4" Content="Close" Width="80" HorizontalAlignment="Center" Margin="0,20,0,0" Click="Close_Click" />
+    </Grid>
+</Window>
