@@ -34,6 +34,9 @@
 			<Generator>SettingsSingleFileGenerator</Generator>
 			<LastGenOutput>Settings.Designer.cs</LastGenOutput>
 		</None>
+		<Compile Update="Models\VoiceInfo.cs">
+		  <Generator>MSBuild:Compile</Generator>
+		</Compile>
 		<Compile Update="Properties\Settings.Designer.cs">
 			<DesignTimeSharedInput>True</DesignTimeSharedInput>
 			<AutoGen>True</AutoGen>

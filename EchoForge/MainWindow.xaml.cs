@@ -11,8 +11,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Diagnostics;
-
 namespace EchoForge
 {
     /// <summary>
@@ -20,6 +18,9 @@ namespace EchoForge
     /// </summary>
     public partial class MainWindow : RibbonWindow
     {
+        public static List<Models.VoiceInfo> AllVoices { get; private set; } = new();
+        public static string VoiceMode { get; set; } = "Single Narration";
+
         public MainWindow()
         {
             InitializeComponent();
@@ -46,9 +47,30 @@ namespace EchoForge
             win.ShowDialog();
         }
 
-        private void ConfiguredVoices_Click(object sender, RoutedEventArgs e)
+        private async void CallVoices_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Configured voices placeholder.", "Configured Voices");
+            var key = Properties.Settings.Default.ElevenLabsApiKey;
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                MessageBox.Show("ElevenLabs API key not set.", "Call Voices");
+                return;
+            }
+
+            try
+            {
+                var svc = new Services.ElevenLabsService();
+                AllVoices = await svc.GetVoicesAsync(key);
+                MessageBox.Show($"Retrieved {AllVoices.Count} voices.", "Call Voices");
+
+                if (LeftPaneHost.Content is panes.SettingsLeftPane pane)
+                {
+                    pane.LoadVoices(AllVoices);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to fetch voices: {ex.Message}", "Call Voices");
+            }
         }
 
         private void EnterProductKey_Click(object sender, RoutedEventArgs e)
@@ -92,8 +114,13 @@ namespace EchoForge
                         RightPaneHost.Content = new GenerateRightPane();
                         break;
                     case "Settings":
-                        LeftPaneHost.Content = new SettingsLeftPane();
+                        var lp = new SettingsLeftPane();
+                        LeftPaneHost.Content = lp;
                         RightPaneHost.Content = new SettingsRightPane();
+                        if (AllVoices.Any())
+                        {
+                            lp.LoadVoices(AllVoices);
+                        }
                         break;
                 }
             }
