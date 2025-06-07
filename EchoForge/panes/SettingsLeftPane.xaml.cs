@@ -53,31 +53,103 @@ namespace EchoForge.panes
                 }
                 container.Children.Add(header);
 
-                if (!string.IsNullOrEmpty(v.preview_url))
-                {
-                    var play = new Button { Content = "Play", Margin = new Thickness(0, 2, 0, 2) };
-                    play.Click += async (s, e) => await PlayPreview(v.preview_url!);
-                    container.Children.Add(play);
-                }
-
                 var checkPanel = new StackPanel { Orientation = Orientation.Horizontal };
                 var cbNarr = new CheckBox { Content = "Narrator", IsChecked = v.IsNarrator };
                 var cbDialog = new CheckBox { Content = "Dialog", Margin = new Thickness(5, 0, 0, 0), IsChecked = v.IsDialog };
                 var cbDoNot = new CheckBox { Content = "Do Not Use", Margin = new Thickness(5, 0, 0, 0), IsChecked = v.DoNotUse };
 
-                cbNarr.Checked += (s, e) => { v.IsNarrator = true; cbDoNot.IsChecked = false; };
-                cbNarr.Unchecked += (s, e) => { v.IsNarrator = false; };
-                cbDialog.Checked += (s, e) => { v.IsDialog = true; cbDoNot.IsChecked = false; };
-                cbDialog.Unchecked += (s, e) => { v.IsDialog = false; };
-                cbDoNot.Checked += (s, e) => { v.DoNotUse = true; cbNarr.IsChecked = false; cbDialog.IsChecked = false; };
-                cbDoNot.Unchecked += (s, e) => { v.DoNotUse = false; };
+                void UpdateHeaderColor()
+                {
+                    if (v.DoNotUse)
+                    {
+                        header.Background = Brushes.Red;
+                    }
+                    else if (v.IsNarrator && v.IsDialog)
+                    {
+                        header.Background = Brushes.MediumPurple;
+                    }
+                    else if (v.IsNarrator)
+                    {
+                        header.Background = Brushes.LightBlue;
+                    }
+                    else if (v.IsDialog)
+                    {
+                        header.Background = Brushes.MediumSeaGreen;
+                    }
+                    else
+                    {
+                        header.Background = Brushes.Transparent;
+                    }
+                }
+
+                cbNarr.Checked += (s, e) => { v.IsNarrator = true; cbDoNot.IsChecked = false; UpdateHeaderColor(); };
+                cbNarr.Unchecked += (s, e) => { v.IsNarrator = false; UpdateHeaderColor(); };
+                cbDialog.Checked += (s, e) => { v.IsDialog = true; cbDoNot.IsChecked = false; UpdateHeaderColor(); };
+                cbDialog.Unchecked += (s, e) => { v.IsDialog = false; UpdateHeaderColor(); };
+                cbDoNot.Checked += (s, e) => { v.DoNotUse = true; cbNarr.IsChecked = false; cbDialog.IsChecked = false; UpdateHeaderColor(); };
+                cbDoNot.Unchecked += (s, e) => { v.DoNotUse = false; UpdateHeaderColor(); };
 
                 checkPanel.Children.Add(cbNarr);
                 checkPanel.Children.Add(cbDialog);
                 checkPanel.Children.Add(cbDoNot);
-                container.Children.Add(checkPanel);
+
+                Button? playButton = null;
+                WaveOutEvent? player = null;
+                Mp3FileReader? reader = null;
+                MemoryStream? ms = null;
+                bool playing = false;
+
+                if (!string.IsNullOrEmpty(v.preview_url))
+                {
+                    playButton = new Button { Content = "Play", Margin = new Thickness(10, 0, 0, 0), Width = 60 };
+                    playButton.Click += async (s, e) =>
+                    {
+                        if (!playing)
+                        {
+                            if (player == null)
+                            {
+                                try
+                                {
+                                    using var client = new HttpClient();
+                                    var data = await client.GetByteArrayAsync(v.preview_url!);
+                                    ms = new MemoryStream(data);
+                                    reader = new Mp3FileReader(ms);
+                                    player = new WaveOutEvent();
+                                    player.Init(reader);
+                                    player.PlaybackStopped += (s2, e2) =>
+                                    {
+                                        playButton.Content = "Play";
+                                        playing = false;
+                                    };
+                                }
+                                catch
+                                {
+                                    return;
+                                }
+                            }
+
+                            player.Play();
+                            playButton.Content = "Stop";
+                            playing = true;
+                        }
+                        else
+                        {
+                            player?.Stop();
+                            playButton.Content = "Play";
+                            playing = false;
+                        }
+                    };
+                }
+
+                var bottomPanel = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(0, 2, 0, 2) };
+                bottomPanel.Children.Add(checkPanel);
+                if (playButton != null)
+                    bottomPanel.Children.Add(playButton);
+
+                container.Children.Add(bottomPanel);
 
                 VoicesPanel.Children.Add(container);
+                UpdateHeaderColor();
             }
         }
 
