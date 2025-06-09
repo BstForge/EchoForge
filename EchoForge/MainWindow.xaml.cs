@@ -67,6 +67,12 @@ namespace EchoForge
             {
                 var svc = new Services.ElevenLabsService();
                 AllVoices = await svc.GetVoicesAsync(key);
+                foreach (var v in AllVoices)
+                {
+                    v.DoNotUse = true;
+                    v.IsNarrator = false;
+                    v.IsDialog = false;
+                }
                 MessageBox.Show($"Retrieved {AllVoices.Count} voices.", "Call Voices");
 
                 if (LeftPaneHost.Content is panes.SettingsLeftPane pane)

@@ -15,8 +15,6 @@ namespace EchoForge.panes
         public PrepareRightPane()
         {
             InitializeComponent();
-            VoiceDropdown.Items.Add("Narrator");
-            VoiceDropdown.Items.Add("Dialog");
         }
 
         public void LoadChunks(List<Chunk> chunks)
@@ -52,7 +50,7 @@ namespace EchoForge.panes
                 ToneBox.Text = string.Empty;
                 SpeedSlider.Value = 0;
                 PacingSlider.Value = 0;
-                VoiceDropdown.SelectedIndex = -1;
+                VoiceDropdown.Items.Clear();
                 return;
             }
 
@@ -62,7 +60,7 @@ namespace EchoForge.panes
             ToneBox.Text = c.Tone;
             SpeedSlider.Value = ClampSlider(c.Speed);
             PacingSlider.Value = ClampSlider(c.Pacing);
-            VoiceDropdown.SelectedItem = c.Voice;
+            UpdateVoiceOptions(c.Voice);
         }
 
         private static int ClampSlider(int val)
@@ -71,6 +69,28 @@ namespace EchoForge.panes
             if (val < 0) return 0;
             if (val > 9) return 9;
             return val;
+        }
+
+        private void UpdateVoiceOptions(string chunkVoice)
+        {
+            VoiceDropdown.Items.Clear();
+            IEnumerable<VoiceInfo> voices;
+            if (chunkVoice.Equals("Narrator", System.StringComparison.OrdinalIgnoreCase))
+            {
+                voices = MainWindow.AllVoices.Where(v => v.IsNarrator && !v.DoNotUse);
+            }
+            else
+            {
+                voices = MainWindow.AllVoices.Where(v => v.IsDialog && !v.DoNotUse);
+            }
+
+            foreach (var v in voices)
+            {
+                VoiceDropdown.Items.Add(v.name);
+            }
+
+            if (VoiceDropdown.Items.Count > 0)
+                VoiceDropdown.SelectedIndex = 0;
         }
     }
 }

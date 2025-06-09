@@ -88,6 +88,7 @@ namespace EchoForge.Services
             sb.AppendLine();
             sb.AppendLine("Narration Style B: Narrator & Dialog");
             sb.AppendLine("Split narration and dialogue into separate chunks. Only quoted speech is included in dialog chunks. All other text is placed in narrator chunks.");
+            sb.AppendLine("If narration precedes a quote, keep that narration (e.g., attribution like 'Chris shouted,') in the narrator chunk and start the dialog chunk at the opening quotation mark.");
             sb.AppendLine();
             if (narrationAndDialog)
             {
@@ -108,8 +109,13 @@ namespace EchoForge.Services
             if (string.IsNullOrWhiteSpace(response))
                 return chunks;
 
-            var pattern = @"Chunk\s*\d+:\s*Voice:\s*(?<voice>.+?)\s*\nSpeed:\s*(?<speed>\d+)\s*\nTone:\s*(?<tone>.+?)\s*\nPacing:\s*(?<pacing>\d+)\s*\nText:\s*(?<text>.*?)(?=\nChunk|$)";
-            foreach (Match m in Regex.Matches(response, pattern, RegexOptions.Singleline))
+            var pattern = @"Chunk\s*\d+:\s*[\r\n]+" +
+                          @"Voice:\s*(?<voice>.+?)\s*[\r\n]+" +
+                          @"Speed:\s*(?<speed>\d+)\s*[\r\n]+" +
+                          @"Tone:\s*(?<tone>.+?)\s*[\r\n]+" +
+                          @"Pacing:\s*(?<pacing>\d+)\s*[\r\n]+" +
+                          @"Text:\s*(?<text>.*?)(?=\r?\nChunk\s*\d+:|$)";
+            foreach (Match m in Regex.Matches(response, pattern, RegexOptions.Singleline | RegexOptions.IgnoreCase))
             {
                 if (!int.TryParse(m.Groups["speed"].Value.Trim(), out var speed)) speed = 5;
                 if (!int.TryParse(m.Groups["pacing"].Value.Trim(), out var pacing)) pacing = 5;
