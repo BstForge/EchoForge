@@ -11,18 +11,32 @@
                 <RowDefinition/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="0" Margin="0,0,0,5">
-                <Button Content="Copy" Width="60" Margin="0,0,5,0" />
-                <Button Content="Paste" Width="60" />
-            </StackPanel>
-            <TextBox x:Name="InputTextBox" Grid.Row="1" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" />
+            <Grid Grid.Row="0" Margin="0,0,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Book:" VerticalAlignment="Center"/>
+                    <TextBox x:Name="BookField" Width="100" Margin="5,0" />
+                    <TextBlock Text="Chapter:" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                    <TextBox x:Name="ChapterField" Width="40" Margin="5,0" />
+                    <TextBlock Text="Scene:" VerticalAlignment="Center" Margin="10,0,0,0"/>
+                    <TextBox x:Name="SceneField" Width="40" Margin="5,0" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1">
+                    <Button x:Name="CopyButton" Content="Copy" Width="60" Margin="0,0,5,0" Click="Copy_Click" />
+                    <Button x:Name="PasteButton" Content="Paste" Width="60" Click="Paste_Click" />
+                </StackPanel>
+            </Grid>
+            <TextBox x:Name="InputTextBox" Grid.Row="1" AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" TextChanged="InputTextBox_TextChanged" />
             <Grid Grid.Row="2" Margin="0,5,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBlock x:Name="CharCountText" Text="0 characters" VerticalAlignment="Center" />
-                <Button Content="Parse" Grid.Column="1" Width="80" HorizontalAlignment="Right" />
+                <Button Content="Parse" Grid.Column="1" Width="80" HorizontalAlignment="Right" Click="Parse_Click" />
             </Grid>
         </Grid>
     </Border>
