@@ -67,18 +67,22 @@ namespace EchoForge.panes
             }
 
             var service = new ChatGPTService(apiKey);
-            var results = new List<string>();
+            var allChunks = new List<Models.Chunk>();
             foreach (var c in chunks)
             {
-                var res = await service.ParseSceneAsync(c, MainWindow.VoiceMode == "Narration & Dialog");
-                results.Add(res);
+                var res = await service.ParseSceneAsync(c, MainWindow.VoiceMode == "Narrator & Dialog");
+                allChunks.AddRange(ChatGPTService.ParseChunks(res));
             }
 
             MainWindow.BookTitle = BookField.Text;
             MainWindow.ChapterNumber = ChapterField.Text;
             MainWindow.SceneNumber = SceneField.Text;
+            MainWindow.ParsedChunks = allChunks;
 
-            MessageBox.Show(string.Join("\n\n", results), "Parse Result");
+            if (Application.Current.MainWindow is MainWindow mw && mw.RightPaneHost.Content is PrepareRightPane pane)
+            {
+                pane.LoadChunks(allChunks);
+            }
         }
     }
 }

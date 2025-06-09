@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace EchoForge.Services
@@ -72,51 +73,58 @@ namespace EchoForge.Services
         private string GetSystemPrompt(bool narrationAndDialog)
         {
             var sb = new StringBuilder();
-            sb.AppendLine("You are an expert literary parsing assistant helping to prepare audiobook scenes for high-quality AI voice narration using ElevenLabs.");
+            sb.AppendLine("You are an expert literary parsing assistant preparing audiobook scenes for high quality narration.");
             sb.AppendLine();
-            sb.AppendLine("You will receive a full scene of text containing both narration and dialogue. Your job is to break the scene into logical \"chunks\" that are each under 4800 characters, while maintaining the integrity of natural paragraph breaks and flow.");
+            sb.AppendLine("Break the provided scene into logical chunks under 4800 characters each. Use natural paragraph breaks and maintain chronological order.");
             sb.AppendLine();
-            sb.AppendLine("Depending on the selected narration style, follow one of these two formatting options:");
+            sb.AppendLine("Each chunk must use this label format:");
+            sb.AppendLine("Chunk X:\nVoice: Narrator or Dialog\nSpeed: 1-10\nTone: [descriptor]\nPacing: 1-10\nText: [chunk text]");
+            sb.AppendLine();
+            sb.AppendLine("Insert '...' at the end of a chunk whenever a pause or paragraph break is appropriate.");
+            sb.AppendLine("Estimate speed, tone and pacing using punctuation and verbs like 'shouted', 'muttered' or 'asked'.");
             sb.AppendLine();
             sb.AppendLine("Narration Style A: Single Narration");
+            sb.AppendLine("Return the entire parsed text as consecutive Narrator chunks.");
             sb.AppendLine();
-            sb.AppendLine("Output the entire scene in continuous, naturally flowing chunks.");
+            sb.AppendLine("Narration Style B: Narrator & Dialog");
+            sb.AppendLine("Split narration and dialogue into separate chunks. Only quoted speech is included in dialog chunks. All other text is placed in narrator chunks.");
             sb.AppendLine();
-            sb.AppendLine("Use the label format for each chunk:");
-            sb.AppendLine("Chunk X:\nVoice: Narrator\nSpeed: [Your suggestion: 1–10]\nTone: [Your suggestion: 1–10]\nPacing: [Your suggestion: 1–10]\nText: [Parsed text with appropriate pauses]");
-            sb.AppendLine("Within each chunk, insert three periods (...) at the end of each paragraph to signal a 0.25-second pause.");
-            sb.AppendLine();
-            sb.AppendLine("Narration Style B: Narrator & Dialog Separation");
-            sb.AppendLine();
-            sb.AppendLine("Split narration and dialogue into separate chunks. Each chunk should contain only narration or only spoken dialogue.");
-            sb.AppendLine();
-            sb.AppendLine("Dialogue chunks must be written exactly as spoken, without any narration attached.");
-            sb.AppendLine();
-            sb.AppendLine("Use these labels:\nChunk X:\nVoice: Narrator or Dialog\nSpeed: [Your suggestion: 1–10]\nTone: [Your suggestion: 1–10]\nPacing: [Your suggestion: 1–10]\nText: [Parsed text with appropriate pauses]");
-            sb.AppendLine("Identify and extract the spoken dialogue by characters and present it in its own chunk.");
-            sb.AppendLine("Keep narration in separate chunks that describe events, settings, or actions.");
-            sb.AppendLine("As above, insert ... at paragraph ends to create pause cues.");
-            sb.AppendLine();
-            sb.AppendLine("Additional Instructions:");
-            sb.AppendLine();
-            sb.AppendLine("Maintain the chronological integrity of the original scene.");
-            sb.AppendLine("Each chunk must be cohesive, well-formed, and ready to be matched with voice tone sliders later.");
-            sb.AppendLine("Match suggested Speed, Tone, and Pacing values based on emotional and narrative context. Use values from 1 (low/slow/mild) to 10 (intense/fast/urgent).");
-            sb.AppendLine("Do not include any summaries or explanations in the output.");
-            sb.AppendLine("Return only the structured list of chunks, in numbered order, with no extra commentary.");
-
             if (narrationAndDialog)
             {
-                sb.AppendLine();
                 sb.AppendLine("Use Narration Style B.");
             }
             else
             {
-                sb.AppendLine();
                 sb.AppendLine("Use Narration Style A.");
             }
-
+            sb.AppendLine();
+            sb.AppendLine("Return only the numbered list of chunks with no extra commentary.");
             return sb.ToString();
+        }
+
+        public static List<Models.Chunk> ParseChunks(string response)
+        {
+            var chunks = new List<Models.Chunk>();
+            if (string.IsNullOrWhiteSpace(response))
+                return chunks;
+
+            var pattern = @"Chunk\s*\d+:\s*Voice:\s*(?<voice>.+?)\s*\nSpeed:\s*(?<speed>\d+)\s*\nTone:\s*(?<tone>.+?)\s*\nPacing:\s*(?<pacing>\d+)\s*\nText:\s*(?<text>.*?)(?=\nChunk|$)";
+            foreach (Match m in Regex.Matches(response, pattern, RegexOptions.Singleline))
+            {
+                if (!int.TryParse(m.Groups["speed"].Value.Trim(), out var speed)) speed = 5;
+                if (!int.TryParse(m.Groups["pacing"].Value.Trim(), out var pacing)) pacing = 5;
+
+                chunks.Add(new Models.Chunk
+                {
+                    Voice = m.Groups["voice"].Value.Trim(),
+                    Speed = speed,
+                    Tone = m.Groups["tone"].Value.Trim(),
+                    Pacing = pacing,
+                    Text = m.Groups["text"].Value.Trim()
+                });
+            }
+
+            return chunks;
         }
     }
 }

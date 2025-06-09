@@ -17,28 +17,28 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,5">
-                    <Button Content="&lt;" Width="30" Margin="0,0,5,0" />
-                    <Button Content=">" Width="30" Margin="0,0,5,0" />
+                    <Button x:Name="PrevChunkButton" Content="&lt;" Width="30" Margin="0,0,5,0" Click="PrevChunk_Click" />
+                    <Button x:Name="NextChunkButton" Content=">" Width="30" Margin="0,0,5,0" Click="NextChunk_Click" />
                     <TextBlock Text="Voice:" VerticalAlignment="Center" Margin="5,0" />
-                    <ComboBox Width="120" Margin="0,0,5,0" />
+                    <ComboBox x:Name="VoiceDropdown" Width="120" Margin="0,0,5,0" />
                     <TextBlock Text="Tone:" VerticalAlignment="Center" Margin="5,0" />
-                    <TextBox Width="100" IsReadOnly="True" />
+                    <TextBox x:Name="ToneBox" Width="100" IsReadOnly="True" />
                 </StackPanel>
-                <RichTextBox Grid.Row="1" IsReadOnly="True" VerticalScrollBarVisibility="Auto" />
+                <RichTextBox x:Name="ChunkBox" Grid.Row="1" IsReadOnly="True" VerticalScrollBarVisibility="Auto" />
             </Grid>
             <!-- Adjustment controls -->
             <StackPanel Grid.Column="1" Margin="10,0,0,0">
                 <StackPanel Margin="0,0,0,10">
                     <TextBlock Text="Speed" />
-                    <Slider Minimum="0" Maximum="9" TickFrequency="1" IsSnapToTickEnabled="True" />
+                    <Slider x:Name="SpeedSlider" Minimum="0" Maximum="9" TickFrequency="1" IsSnapToTickEnabled="True" />
                 </StackPanel>
                 <StackPanel Margin="0,0,0,10">
                     <TextBlock Text="Tone" />
-                    <Slider Minimum="0" Maximum="9" TickFrequency="1" IsSnapToTickEnabled="True" />
+                    <Slider x:Name="ToneSlider" Minimum="0" Maximum="9" TickFrequency="1" IsSnapToTickEnabled="True" />
                 </StackPanel>
                 <StackPanel Margin="0,0,0,10">
                     <TextBlock Text="Pacing" />
-                    <Slider Minimum="0" Maximum="9" TickFrequency="1" IsSnapToTickEnabled="True" />
+                    <Slider x:Name="PacingSlider" Minimum="0" Maximum="9" TickFrequency="1" IsSnapToTickEnabled="True" />
                 </StackPanel>
                 <Button Content="Re-build" Margin="0,0,0,5" />
                 <Button Content="Send to Generation Menu" Margin="0,0,0,10" />

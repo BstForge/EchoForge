@@ -7,8 +7,8 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         <ComboBox x:Name="VoiceModeDropdown" Margin="5" Width="180" SelectionChanged="VoiceModeDropdown_SelectionChanged">
-            <ComboBoxItem Content="Narration" />
-            <ComboBoxItem Content="Narration &amp; Dialog" />
+            <ComboBoxItem Content="Single Narration" />
+            <ComboBoxItem Content="Narrator &amp; Dialog" />
         </ComboBox>
         <ScrollViewer Grid.Row="1" Margin="5">
             <StackPanel x:Name="VoicesPanel" />

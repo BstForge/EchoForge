@@ -19,7 +19,8 @@ namespace EchoForge
     public partial class MainWindow : RibbonWindow
     {
         public static List<Models.VoiceInfo> AllVoices { get; private set; } = new();
-        public static string VoiceMode { get; set; } = "Narration";
+        public static string VoiceMode { get; set; } = "Single Narration";
+        public static List<Models.Chunk> ParsedChunks { get; set; } = new();
 
         // Stores text and metadata when switching between panes
         public static string PrepareText { get; set; } = string.Empty;
