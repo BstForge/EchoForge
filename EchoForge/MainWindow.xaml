@@ -48,7 +48,7 @@
         </Border>
 
         <!-- ⬛ RIBBON ROW - INCLUDES HAMBURGER + CONTEXTUAL RIBBON -->
-        <Grid Grid.Row="0" Grid.ColumnSpan="2">
+        <Grid x:Name="RibbonContainer" Grid.Row="0" Grid.ColumnSpan="2" Margin="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="60"/>
                 <!-- Hamburger -->
@@ -68,8 +68,8 @@
         </Grid>
 
         <!-- ⚪ MAIN CONTENT AREA -->
-        <Border Grid.Row="1" Grid.Column="1" Background="#1c1c1c" CornerRadius="6" Margin="0,5,5,5">
-            <ContentControl x:Name="MainContentControl"/>
+        <Border x:Name="MainContentBorder" Grid.Row="1" Grid.Column="1" Background="#1c1c1c" CornerRadius="6" Margin="0">
+            <ContentControl x:Name="MainContentControl" Margin="5"/>
         </Border>
 
 
