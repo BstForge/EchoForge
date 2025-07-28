@@ -13,7 +13,7 @@ public class ProjectData
 
 public static class ProjectService
 {
-    public static void Save(ProjectData data)
+    public static string? Save(ProjectData data)
     {
         var dialog = new SaveFileDialog
         {
@@ -24,10 +24,12 @@ public static class ProjectService
         {
             var json = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(dialog.FileName, json);
+            return dialog.FileName;
         }
+        return null;
     }
 
-    public static ProjectData? Load()
+    public static (ProjectData? Data, string? Path) Load()
     {
         var dialog = new OpenFileDialog
         {
@@ -37,8 +39,9 @@ public static class ProjectService
         if (dialog.ShowDialog() == true)
         {
             var json = File.ReadAllText(dialog.FileName);
-            return JsonSerializer.Deserialize<ProjectData>(json);
+            var data = JsonSerializer.Deserialize<ProjectData>(json);
+            return (data, dialog.FileName);
         }
-        return null;
+        return (null, null);
     }
 }

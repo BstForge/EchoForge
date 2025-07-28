@@ -13,6 +13,7 @@ namespace EchoForge.Dialogs
         private void TransitionsCheckBox_Changed(object sender, RoutedEventArgs e)
         {
             AppSettings.EnableTransitions = TransitionsCheckBox.IsChecked == true;
+            AppSettings.Save();
         }
     }
 }

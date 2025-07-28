@@ -2,13 +2,16 @@
 using System.Data;
 using System.Windows;
 
-namespace EchoForge
-{
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
-    public partial class App : Application
-    {
-    }
+namespace EchoForge;
 
+/// <summary>
+/// Interaction logic for App.xaml
+/// </summary>
+public partial class App : Application
+{
+    protected override void OnStartup(StartupEventArgs e)
+    {
+        base.OnStartup(e);
+        AppSettings.Load();
+    }
 }

@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using System.Threading.Tasks;
+using System.IO;
 using EchoForge.Panes;
 using EchoForge.Menus;
 using EchoForge.Dialogs;
@@ -17,10 +18,13 @@ namespace EchoForge
         private readonly UserControl _audioRibbon = new AudioRibbon();
         private readonly UserControl _voiceRibbon = new VoiceRibbon();
         private string _currentView = "Input";
+        private string? _currentFilePath;
 
         public MainWindow()
         {
             InitializeComponent();
+
+            Title = "EchoForge - New Project";
 
             // Load the default view and ribbon
             LoadView(new InputView());
@@ -168,16 +172,22 @@ namespace EchoForge
         private async void New_Click(object sender, RoutedEventArgs e)
         {
             AppSettings.EnableTransitions = true;
+            AppSettings.Save();
+            _currentFilePath = null;
+            Title = "EchoForge - New Project";
             await SetViewAsync("Input");
         }
 
         private async void Load_Click(object sender, RoutedEventArgs e)
         {
-            var data = ProjectService.Load();
-            if (data != null)
+            var result = ProjectService.Load();
+            if (result.Data != null && result.Path != null)
             {
-                AppSettings.EnableTransitions = data.EnableTransitions;
-                await SetViewAsync(data.SelectedView);
+                AppSettings.EnableTransitions = result.Data.EnableTransitions;
+                AppSettings.Save();
+                await SetViewAsync(result.Data.SelectedView);
+                _currentFilePath = result.Path;
+                Title = $"EchoForge - {Path.GetFileNameWithoutExtension(result.Path)}";
             }
         }
 
@@ -189,7 +199,12 @@ namespace EchoForge
                 EnableTransitions = AppSettings.EnableTransitions,
                 Manuscript = null
             };
-            ProjectService.Save(data);
+            var path = ProjectService.Save(data);
+            if (path != null)
+            {
+                _currentFilePath = path;
+                Title = $"EchoForge - {Path.GetFileNameWithoutExtension(path)}";
+            }
         }
     }
 }
