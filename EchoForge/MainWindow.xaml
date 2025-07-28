@@ -29,11 +29,21 @@
         <!-- 🔴 LEFT SIDEBAR -->
         <Border Grid.Row="1" Grid.Column="0" Background="#222">
             <StackPanel VerticalAlignment="Top" Margin="0,10" HorizontalAlignment="Center">
-                <Button Width="40" Height="40" Margin="5" Content="📝" Click="Input_Click"/>
-                <Button Width="40" Height="40" Margin="5" Content="🔍" Click="Parsed_Click"/>
-                <Button Width="40" Height="40" Margin="5" Content="⚙" Click="Generate_Click"/>
-                <Button Width="40" Height="40" Margin="5" Content="🔊" Click="Audio_Click"/>
-                <Button Width="40" Height="40" Margin="5" Content="🎙" Click="Voice_Click"/>
+                <Button Padding="6" Margin="2,6" Click="Input_Click">
+                    <Image Source="Resources/Input.png" Width="50" Stretch="Uniform"/>
+                </Button>
+                <Button Padding="6" Margin="2,6" Click="Parsed_Click">
+                    <Image Source="Resources/Parsed.png" Width="50" Stretch="Uniform"/>
+                </Button>
+                <Button Padding="6" Margin="2,6" Click="Generate_Click">
+                    <Image Source="Resources/Generate.png" Width="50" Stretch="Uniform"/>
+                </Button>
+                <Button Padding="6" Margin="2,6" Click="Audio_Click">
+                    <Image Source="Resources/Audio.png" Width="50" Stretch="Uniform"/>
+                </Button>
+                <Button Padding="6" Margin="2,6" Click="Voice_Click">
+                    <Image Source="Resources/Voice.png" Width="50" Stretch="Uniform"/>
+                </Button>
             </StackPanel>
         </Border>
 
