@@ -1,24 +1,29 @@
-﻿using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using EchoForge.Panes;
 
 namespace EchoForge
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
+
+            // Load the default view
+            LoadView(new InputView());
         }
+
+        private void LoadView(UserControl view)
+        {
+            MainContentControl.Content = view;
+        }
+
+        // Button click handlers
+        private void Input_Click(object sender, RoutedEventArgs e) => LoadView(new InputView());
+        private void Parsed_Click(object sender, RoutedEventArgs e) => LoadView(new ParsedView());
+        private void Generate_Click(object sender, RoutedEventArgs e) => LoadView(new GenerateView());
+        private void Audio_Click(object sender, RoutedEventArgs e) => LoadView(new AudioFilesView());
+        private void Voice_Click(object sender, RoutedEventArgs e) => LoadView(new VoiceOptionsView());
     }
 }
