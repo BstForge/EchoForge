@@ -1,0 +1,11 @@
+<UserControl x:Class="EchoForge.Menus.ParsedRibbon"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <TabControl Background="#333" BorderThickness="0">
+        <TabItem Header="Parsed">
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <Button Content="Validate" Width="70"/>
+            </StackPanel>
+        </TabItem>
+    </TabControl>
+</UserControl>

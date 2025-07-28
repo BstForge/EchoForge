@@ -64,9 +64,7 @@
             </Border>
 
             <!-- CONTEXTUAL RIBBON BAR -->
-            <Border Grid.Column="1" Background="#333" CornerRadius="0,0,6,6" Margin="0,0,5,0">
-                <TextBlock Text="Ribbon Area" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="18"/>
-            </Border>
+            <ContentControl x:Name="MainRibbon" Grid.Column="1" Margin="0,0,5,0" />
         </Grid>
 
         <!-- ⚪ MAIN CONTENT AREA -->
