@@ -62,9 +62,9 @@
                     <TextBlock Text="≡"/>
                     <Button.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="New"/>
-                            <MenuItem Header="Load"/>
-                            <MenuItem Header="Save"/>
+                            <MenuItem Header="New" Click="New_Click"/>
+                            <MenuItem Header="Load" Click="Load_Click"/>
+                            <MenuItem Header="Save" Click="Save_Click"/>
                             <MenuItem Header="Preferences" Click="Preferences_Click"/>
                             <Separator/>
                             <MenuItem Header="Exit" Click="Exit_Click"/>

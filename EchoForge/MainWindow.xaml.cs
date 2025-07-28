@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using EchoForge.Panes;
 using EchoForge.Menus;
 using EchoForge.Dialogs;
+using EchoForge.Services;
 
 namespace EchoForge
 {
@@ -15,6 +16,7 @@ namespace EchoForge
         private readonly UserControl _generateRibbon = new GenerateRibbon();
         private readonly UserControl _audioRibbon = new AudioRibbon();
         private readonly UserControl _voiceRibbon = new VoiceRibbon();
+        private string _currentView = "Input";
 
         public MainWindow()
         {
@@ -23,6 +25,7 @@ namespace EchoForge
             // Load the default view and ribbon
             LoadView(new InputView());
             SetRibbon(_inputRibbon);
+            _currentView = "Input";
         }
 
         private void LoadView(UserControl view)
@@ -89,30 +92,57 @@ namespace EchoForge
             }
         }
 
+        private async Task SetViewAsync(string view)
+        {
+            switch (view)
+            {
+                case "Input":
+                    await TransitionAsync(new InputView(), _inputRibbon);
+                    break;
+                case "Parsed":
+                    await TransitionAsync(new ParsedView(), _parsedRibbon);
+                    break;
+                case "Generate":
+                    await TransitionAsync(new GenerateView(), _generateRibbon);
+                    break;
+                case "Audio":
+                    await TransitionAsync(new AudioFilesView(), _audioRibbon);
+                    break;
+                case "Voice":
+                    await TransitionAsync(new VoiceOptionsView(), _voiceRibbon);
+                    break;
+                default:
+                    await TransitionAsync(new InputView(), _inputRibbon);
+                    view = "Input";
+                    break;
+            }
+            _currentView = view;
+        }
+
         // Button click handlers
         private async void Input_Click(object sender, RoutedEventArgs e)
         {
-            await TransitionAsync(new InputView(), _inputRibbon);
+            await SetViewAsync("Input");
         }
 
         private async void Parsed_Click(object sender, RoutedEventArgs e)
         {
-            await TransitionAsync(new ParsedView(), _parsedRibbon);
+            await SetViewAsync("Parsed");
         }
 
         private async void Generate_Click(object sender, RoutedEventArgs e)
         {
-            await TransitionAsync(new GenerateView(), _generateRibbon);
+            await SetViewAsync("Generate");
         }
 
         private async void Audio_Click(object sender, RoutedEventArgs e)
         {
-            await TransitionAsync(new AudioFilesView(), _audioRibbon);
+            await SetViewAsync("Audio");
         }
 
         private async void Voice_Click(object sender, RoutedEventArgs e)
         {
-            await TransitionAsync(new VoiceOptionsView(), _voiceRibbon);
+            await SetViewAsync("Voice");
         }
 
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)
@@ -133,6 +163,33 @@ namespace EchoForge
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private async void New_Click(object sender, RoutedEventArgs e)
+        {
+            AppSettings.EnableTransitions = true;
+            await SetViewAsync("Input");
+        }
+
+        private async void Load_Click(object sender, RoutedEventArgs e)
+        {
+            var data = ProjectService.Load();
+            if (data != null)
+            {
+                AppSettings.EnableTransitions = data.EnableTransitions;
+                await SetViewAsync(data.SelectedView);
+            }
+        }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            var data = new ProjectData
+            {
+                SelectedView = _currentView,
+                EnableTransitions = AppSettings.EnableTransitions,
+                Manuscript = null
+            };
+            ProjectService.Save(data);
         }
     }
 }
