@@ -9,11 +9,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Audio.png" />
+    <None Remove="Resources\Generate.png" />
+    <None Remove="Resources\Input.png" />
+    <None Remove="Resources\Parsed.png" />
+    <None Remove="Resources\Voice.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Menus\" />
     <Folder Include="Controls\" />
     <Folder Include="Animations\" />
     <Folder Include="ViewModels\" />
-    <Folder Include="Resources\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Audio.png" />
+    <Resource Include="Resources\Generate.png" />
+    <Resource Include="Resources\Input.png" />
+    <Resource Include="Resources\Parsed.png" />
+    <Resource Include="Resources\Voice.png" />
   </ItemGroup>
 
 </Project>
