@@ -4,6 +4,7 @@ using System.Windows.Media.Animation;
 using System.Threading.Tasks;
 using EchoForge.Panes;
 using EchoForge.Menus;
+using EchoForge.Dialogs;
 
 namespace EchoForge
 {
@@ -65,19 +66,27 @@ namespace EchoForge
 
         private async Task TransitionAsync(UserControl view, UserControl ribbon)
         {
-            var contentRetract = GetStoryboard("ContentRetractStoryboard", MainContentBorder);
-            var ribbonRetract = GetStoryboard("RibbonRetractStoryboard", RibbonContainer);
-            var ribbonExpand = GetStoryboard("RibbonExpandStoryboard", RibbonContainer);
-            var contentExpand = GetStoryboard("ContentExpandStoryboard", MainContentBorder);
+            if (AppSettings.EnableTransitions)
+            {
+                var contentRetract = GetStoryboard("ContentRetractStoryboard", MainContentBorder);
+                var ribbonRetract = GetStoryboard("RibbonRetractStoryboard", RibbonContainer);
+                var ribbonExpand = GetStoryboard("RibbonExpandStoryboard", RibbonContainer);
+                var contentExpand = GetStoryboard("ContentExpandStoryboard", MainContentBorder);
 
-            await BeginStoryboardAsync(contentRetract);
-            await BeginStoryboardAsync(ribbonRetract);
+                await BeginStoryboardAsync(contentRetract);
+                await BeginStoryboardAsync(ribbonRetract);
 
-            LoadView(view);
-            SetRibbon(ribbon);
+                LoadView(view);
+                SetRibbon(ribbon);
 
-            await BeginStoryboardAsync(ribbonExpand);
-            await BeginStoryboardAsync(contentExpand);
+                await BeginStoryboardAsync(ribbonExpand);
+                await BeginStoryboardAsync(contentExpand);
+            }
+            else
+            {
+                LoadView(view);
+                SetRibbon(ribbon);
+            }
         }
 
         // Button click handlers
@@ -104,6 +113,26 @@ namespace EchoForge
         private async void Voice_Click(object sender, RoutedEventArgs e)
         {
             await TransitionAsync(new VoiceOptionsView(), _voiceRibbon);
+        }
+
+        private void HamburgerButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (HamburgerButton.ContextMenu != null)
+            {
+                HamburgerButton.ContextMenu.PlacementTarget = HamburgerButton;
+                HamburgerButton.ContextMenu.IsOpen = true;
+            }
+        }
+
+        private void Preferences_Click(object sender, RoutedEventArgs e)
+        {
+            var pref = new PreferencesWindow { Owner = this };
+            pref.ShowDialog();
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }

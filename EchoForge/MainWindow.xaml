@@ -58,9 +58,19 @@
 
             <!-- 🟩 HAMBURGER ICON -->
             <Border Grid.Column="0" Background="#2b2b2b">
-                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
-                    <TextBlock Text="≡" FontSize="24" Margin="10,0" Foreground="LightGreen"/>
-                </StackPanel>
+                <Button x:Name="HamburgerButton" Background="Transparent" BorderThickness="0" Foreground="LightGreen" FontSize="24" Click="HamburgerButton_Click" Padding="10,0">
+                    <TextBlock Text="≡"/>
+                    <Button.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="New"/>
+                            <MenuItem Header="Load"/>
+                            <MenuItem Header="Save"/>
+                            <MenuItem Header="Preferences" Click="Preferences_Click"/>
+                            <Separator/>
+                            <MenuItem Header="Exit" Click="Exit_Click"/>
+                        </ContextMenu>
+                    </Button.ContextMenu>
+                </Button>
             </Border>
 
             <!-- CONTEXTUAL RIBBON BAR -->

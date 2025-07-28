@@ -17,12 +17,13 @@
     <None Remove="Resources\Voice.png" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Menus\" />
-    <Folder Include="Controls\" />
-    <Folder Include="Animations\" />
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
+    <ItemGroup>
+        <Folder Include="Menus\" />
+        <Folder Include="Controls\" />
+        <Folder Include="Animations\" />
+        <Folder Include="ViewModels\" />
+        <Folder Include="Dialogs\" />
+    </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Resources\Audio.png" />
