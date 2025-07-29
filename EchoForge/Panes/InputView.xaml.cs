@@ -24,5 +24,20 @@ namespace EchoForge.Panes
         {
             InitializeComponent();
         }
+
+        private void InputTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var text = InputTextBox.Text;
+            int charCount = text.Length;
+
+            int wordCount = 0;
+            if (!string.IsNullOrWhiteSpace(text))
+            {
+                wordCount = text.Split((char[])null, StringSplitOptions.RemoveEmptyEntries).Length;
+            }
+
+            WordCountText.Text = $"Words: {wordCount}";
+            CharCountText.Text = $"Characters: {charCount}";
+        }
     }
 }

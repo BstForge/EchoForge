@@ -3,8 +3,51 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <TabControl Background="#333" BorderThickness="0">
         <TabItem Header="Input">
-            <StackPanel Orientation="Horizontal" Margin="10">
-                <Button Content="Paste" Width="60"/>
+            <StackPanel Orientation="Horizontal" Margin="10" VerticalAlignment="Center" Spacing="10">
+                <!-- Main Button -->
+                <Button Content="Send to Generation" Width="70" Height="70"/>
+
+                <!-- Stacked text buttons -->
+                <StackPanel Orientation="Vertical" Spacing="5">
+                    <Button Content="Copy" Width="80"/>
+                    <Button Content="Paste" Width="80"/>
+                    <Button Content="Select All" Width="80"/>
+                </StackPanel>
+
+                <!-- Divider -->
+                <Rectangle Width="1" Height="70" Fill="Gray"/>
+
+                <!-- Dropdowns -->
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Genre" Foreground="White" Margin="0,0,0,2"/>
+                    <ComboBox Width="120">
+                        <ComboBoxItem Content="General"/>
+                        <ComboBoxItem Content="Sci-Fi"/>
+                        <ComboBoxItem Content="Horror"/>
+                        <ComboBoxItem Content="Fantasy"/>
+                        <ComboBoxItem Content="Romance"/>
+                        <ComboBoxItem Content="Mystery"/>
+                    </ComboBox>
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical" Margin="10,0,0,0">
+                    <TextBlock Text="Voice Style" Foreground="White" Margin="0,0,0,2"/>
+                    <ComboBox Width="140">
+                        <ComboBoxItem Content="Single narrator"/>
+                        <ComboBoxItem Content="Narrator/Single dialog"/>
+                        <ComboBoxItem Content="Narrator/Multiple dialog"/>
+                    </ComboBox>
+                </StackPanel>
+
+                <!-- Divider -->
+                <Rectangle Width="1" Height="70" Fill="Gray"/>
+
+                <!-- Placeholder buttons -->
+                <StackPanel Orientation="Horizontal" Spacing="5">
+                    <Button Width="40" Height="40"/>
+                    <Button Width="40" Height="40"/>
+                    <Button Width="40" Height="40"/>
+                </StackPanel>
             </StackPanel>
         </TabItem>
     </TabControl>
